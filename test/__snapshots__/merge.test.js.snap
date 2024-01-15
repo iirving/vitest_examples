@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`deepMerge with overlaps  1`] = `
+{
+  "details": {
+    "age": 35,
+    "location": "UK",
+  },
+  "name": "Ian",
+}
+`;
