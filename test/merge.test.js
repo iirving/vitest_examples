@@ -30,7 +30,7 @@ test("shallowMerge with arrays ", () => {
   expect(merged).toEqual([1, 2, "B", "C"]);
 });
 
-test("deepMerge with overlaps ", () => {
+test("deepMerge  ", () => {
   const objA = {
     name: "Ian",
     details: {
@@ -43,7 +43,7 @@ test("deepMerge with overlaps ", () => {
     },
   };
   const merged = deepMerge(objA, objB);
-  console.log(merged);
+
   expect(merged).toEqual({
     name: "Ian",
     details: {
@@ -51,4 +51,48 @@ test("deepMerge with overlaps ", () => {
       location: "UK",
     },
   });
+});
+
+test("deepMerge with overlaps ", () => {
+  const objA = {
+    name: "Ian",
+    details: {
+      age: 34,
+    },
+  };
+  const objB = {
+    details: {
+      location: "UK",
+      age: 35,
+    },
+  };
+  const merged = deepMerge(objA, objB);
+
+  expect(merged).toEqual({
+    name: "Ian",
+    details: {
+      age: 35,
+      location: "UK",
+    },
+  });
+});
+
+test("throws erros on mergeing two diffeent types", () => {
+  const objA = {
+    name: "Ian",
+    details: {
+      age: 34,
+    },
+  };
+  const arrayTwo = ["B", "C"];
+
+  expect(() => deepMerge(objA, arrayTwo)).toThrowError(
+    "Error: Cannot merge two differnet types."
+  );
+});
+
+test("throws errors on merging two different types", () => {
+  expect(() => deepMerge(["foo", "bar"], { foo: "bar" })).toThrowError(
+    "Error: Cannot merge two differnet types."
+  );
 });

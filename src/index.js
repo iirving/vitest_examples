@@ -1,8 +1,11 @@
 export function deepMerge(a, b) {
-  if (Array.isArray(a)) {
+  if (Array.isArray(a) && Array.isArray(b)) {
     return [...a, ...b];
   }
-  // return Object.assign(a, b);
+
+  if (Array.isArray(a) || Array.isArray(b) || typeof a !== typeof b) {
+    throw new Error("Error: Cannot merge two differnet types.");
+  }
 
   const merged = { ...a };
   for (const key of Object.keys(b)) {
