@@ -68,7 +68,15 @@ test("deepMerge with overlaps ", () => {
   };
   const merged = deepMerge(objA, objB);
 
-  expect(merged).toMatchSnapshot();
+  // expect(merged).toMatchInlineSnapshot(`
+  //   {
+  //     "details": {
+  //       "age": 35,
+  //       "location": "UK",
+  //     },
+  //     "name": "Ian",
+  //   }
+  // `);
 
   expect(merged).toEqual({
     name: "Ian",
