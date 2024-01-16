@@ -1,6 +1,10 @@
 import { readFileSync, existsSync } from "fs";
-
+// existsSync
 export function loadConfig() {
-  if (!existsSync("./config.json")) return undefined;
-  return JSON.parse(readFileSync("./config.json", "utf-8"));
+  const config_fs_location = "./config.json";
+  if (!existsSync(config_fs_location)) {
+    return undefined;
+  }
+  const file = readFileSync(config_fs_location, "utf-8");
+  return JSON.parse(file);
 }
