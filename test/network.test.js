@@ -4,33 +4,50 @@
  * or switch to v^2 as of septemeber 2023
  */
 
-import { test, expect, vi, beforeAll, afterEach } from "vitest";
+import { test, expect, vi, beforeAll, afterEach, afterAll } from "vitest";
 import { getPostBodybyId } from "../src/network.js";
-import { http, HttpResponse } from "msw";
+import { rest } from "msw";
 import { setupServer } from "msw/node";
 
 const server = setupServer(
-  http.get("https://jsonplaceholder.typicode.com/posts/:id", ({ params }) => {
-    const { id } = params;
-    return HttpResponse.json({
-      body: "Mocked Body for id: " + id,
-    });
-  })
+  rest.get(
+    "https://jsonplaceholder.typicode.com/posts/:id",
+    (restRequest, restResponse, context) => {
+      const id = restRequest.params.id;
+      return restResponse(
+        context.status(200),
+        context.json({
+          body: "Mocked Body for id: " + id,
+        })
+      );
+    }
+  )
 );
 
-beforeAll(() => server.listen());
-afterEach(() => server.close());
+beforeAll(() => {
+  server.listen();
+});
 
-// test("network getPostBodybyId should fetch", async () => {
-//   const id = 1;
-//   const result = await getPostBodybyId(id);
+afterEach(() => {
+  server.resetHandlers();
+});
 
-//   expect(result).toMatchInlineSnapshot(`"Mocked Body for id: 1"`);
-// });
+afterAll(() => {
+  server.close();
+});
+
+test("network getPostBodybyId should fetch", async () => {
+  const id = 1;
+  const result = await getPostBodybyId(id);
+
+  const expected = `Mocked Body for id: ${id}`.toString();
+  expect(result).toEqual(expected);
+});
 
 test("network getPostBodybyId should fetch for id = 66", async () => {
   const id = 66;
   const result = await getPostBodybyId(id);
 
-  expect(result).toMatchInlineSnapshot(`"Mocked Body for id: 66"`);
+  const expected = `Mocked Body for id: ${id}`.toString();
+  expect(result).toEqual(expected);
 });
