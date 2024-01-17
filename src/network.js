@@ -1,7 +1,7 @@
 export async function getPostBodybyId(id) {
-  const response = await fetch(
+  const data = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${id}`
-  );
-  const body = await response.json();
-  return body;
+  ).then((res) => res.json());
+
+  return data.body;
 }
