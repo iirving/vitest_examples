@@ -1,3 +1,9 @@
+/**
+ * using msw version 1.3.2
+ * to install npm i msw@1.3.2 -D
+ * or switch to v^2 as of septemeber 2023
+ */
+
 import { test, expect, vi, beforeAll, afterEach } from "vitest";
 import { getPostBodybyId } from "../src/network.js";
 import { http, HttpResponse } from "msw";
