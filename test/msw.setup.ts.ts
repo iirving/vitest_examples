@@ -5,22 +5,19 @@
  */
 
 import { beforeAll, afterEach, afterAll } from "vitest";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
 const server = setupServer(
-  rest.get(
-    "https://jsonplaceholder.typicode.com/posts/:id",
-    (restRequest, restResponse, context) => {
-      const id = restRequest.params.id;
-      return restResponse(
-        context.status(200),
-        context.json({
-          body: "Mocked Body for id: " + id,
-        })
-      );
-    }
-  )
+  http.get("https://jsonplaceholder.typicode.com/posts/:id", ({ params }) => {
+    const id = params.id;
+    return HttpResponse.json(
+      {
+        body: "Mocked Body for id: " + id,
+      },
+      { status: 200 }
+    );
+  })
 );
 
 beforeAll(() => {
