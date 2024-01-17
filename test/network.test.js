@@ -4,37 +4,8 @@
  * or switch to v^2 as of septemeber 2023
  */
 
-import { test, expect, vi, beforeAll, afterEach, afterAll } from "vitest";
+import { test, expect } from "vitest";
 import { getPostBodybyId } from "../src/network.js";
-import { rest } from "msw";
-import { setupServer } from "msw/node";
-
-const server = setupServer(
-  rest.get(
-    "https://jsonplaceholder.typicode.com/posts/:id",
-    (restRequest, restResponse, context) => {
-      const id = restRequest.params.id;
-      return restResponse(
-        context.status(200),
-        context.json({
-          body: "Mocked Body for id: " + id,
-        })
-      );
-    }
-  )
-);
-
-beforeAll(() => {
-  server.listen();
-});
-
-afterEach(() => {
-  server.resetHandlers();
-});
-
-afterAll(() => {
-  server.close();
-});
 
 test("network getPostBodybyId should fetch", async () => {
   const id = 1;
