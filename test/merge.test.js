@@ -109,6 +109,14 @@ test("throws errors on merging two different types", () => {
 
 // Another way to test where it throws error on merging two different types
 // not looking for a specific error message, just that it throws an error
-test.fails("throws error on merging two different types", () => {
-  const merged = deepMerge(["foo", "bar"], { foo: "bar" });
+// however this yest will paas if any error happens
+// test.fails("throws error on merging two different types", () => {
+//   const merged = deepMerge(["foo", "bar"], { foo: "bar" });
+// });
+
+// Another way to test where it throws error on merging two different types
+// looking for a thrown error, but not a specific error message
+test("throws error on merging two different types", () => {
+  expect(() => deepMerge(["foo", "bar"], { foo: "bar" })).toThrowError();
+  //  const merged = deepMerge(["foo", "bar"], { foo: "bar" });
 });
