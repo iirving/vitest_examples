@@ -106,3 +106,9 @@ test("throws errors on merging two different types", () => {
     "Error: Cannot merge two differnet types."
   );
 });
+
+// Another way to test where it throws error on merging two different types
+// not looking for a specific error message, just that it throws an error
+test.fails("throws error on merging two different types", () => {
+  const merged = deepMerge(["foo", "bar"], { foo: "bar" });
+});
